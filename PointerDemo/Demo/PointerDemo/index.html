@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Mouse pointer demo</title>
+	<link rel="stylesheet" href="pointer.css"/>
+</head>
+
+<body>
+
+	<div id="app">
+
+    <header>
+		<h1>Mouse pointer</h1>
+    </header>
+
+    <section id="main">
+		<input id="toggle-all" type="checkbox">
+		<label for="toggle-all">Mark all to delete</label>
+		<ul id="pointer-list"></ul>
+    </section>
+
+    <footer>
+		<a id="clear-completed">Delete selection</a>
+		<div id="pointer-count"></div>
+    </footer>
+
+	</div>
+
+	<!-- created or modified by me -->
+	<script type="application/javascript"> 
+		var ip;
+		function getip(json) {
+			ip = json.ip;
+		}
+	</script>
+	<script type="application/javascript" src="http://jsonip.appspot.com/?callback=getip">  </script>
+	<script src="getBrowserInfo.js">  </script>
+	<!-- I have no idea what lies beneath xD -->
+	<script src="../../test/vendor/json2.js"></script>
+	<script src="../../test/vendor/jquery.js"></script>
+	<script src="../../test/vendor/underscore.js"></script>
+	<script src="../../backbone.js"></script>
+	<script src="../backbone.localStorage.js"></script>
+	<script src="pointer.js"></script>
+  
+
+	<!-- Templates -->
+	<script type="text/template" id="item-template">
+    <div class="view">
+		<input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+		<label ><font size="2"><%- "browser: " + browser + ", time: " + time %></font></label><br></br>
+		<label ><font size="2"><%- "Coordinates: X = " + positionX + ", Y = " + positionY  %></font></label>
+		<a class="destroy"></a>
+		</div>
+		<input class="edit" type="text" value="<%- positionX %>" />
+	</script>
+
+	<script type="text/template" id="stats-template">
+		<% if (numbertodelete) { %>
+			<a id="clear-completed">Delete <%= numbertodelete %> selected <%= numbertodelete == 1 ? 'item' : 'items' %></a>
+		<% } %>
+		<div class="pointer-count">Log contains: <b><%= numberoflogs %></b> <%= numberoflogs == 1 ? 'item' : 'items' %></div>
+	</script>
+  
+	</body>
+</html>
