@@ -140,12 +140,28 @@ $(function(){
 		this.listenTo(Todos, 'all', this.render);
 	  
 		var that = this;
-	  
-		document.onclick = function(e){
-			var event = e || window.event;
-			// modified after Algirdas
-			var clickX=0, clickY=0;
 
+		var lastTime = 0;
+	
+		//var timeNow = d.getTime();
+		
+
+		document.onmousemove = function(e){
+			var d = new Date();
+	  		var timeNow = d.getTime();
+	  		var dif = timeNow - lastTime;
+	  		if(dif > 500){
+	  			recorderis();
+	  			
+	  			lastTime = timeNow;
+	  			
+	  		}
+	  		
+		}
+
+		function recorderis(){
+
+			var clickX=0, clickY=0;
 			if ((event.clientX || event.clientY) && document.body && document.body.scrollLeft!=null) {
 				clickX = event.clientX + document.body.scrollLeft;
 				clickY = event.clientY + document.body.scrollTop;
@@ -169,6 +185,15 @@ $(function(){
             " | " + target.tagName + " | " + (target.nextSibling ? target.nextSibling.tagName : "X");
 			
 			that.createOnEnter({ posX: clickX, posY: clickY, instanceThis: this, instanceThat: that, element: elementInfo});
+
+		}
+
+
+		
+
+		document.onclick = function(e){
+				recorderis();
+				//setTimeout();
 		}
 		
 		this.footer = this.$('footer');
