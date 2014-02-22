@@ -143,14 +143,32 @@ $(function(){
 	  
 		document.onclick = function(e){
 			var event = e || window.event;
-			var posX = event.clientX;
-			var posY = event.clientY;
+			// modified after Algirdas
+			var clickX=0, clickY=0;
+
+			if ((event.clientX || event.clientY) && document.body && document.body.scrollLeft!=null) {
+				clickX = event.clientX + document.body.scrollLeft;
+				clickY = event.clientY + document.body.scrollTop;
+			}
+			if ((event.clientX || event.clientY) && document.compatMode=='CSS1Compat' && document.documentElement && document.documentElement.scrollLeft!=null) {
+				clickX = event.clientX + document.documentElement.scrollLeft;
+				clickY = event.clientY + document.documentElement.scrollTop;
+			}
+			if (event.pageX || event.pageY) {
+				clickX = event.pageX;
+				clickY = event.pageY;
+			}
+			
+			// clickX, clickY 				coordinates in page with scroll
+			// event.clientX, event.clientY 	coordinates in page without scroll
+			// event.screenX, event.screenY		coordinates in page from monitor top left courner
+			
 			var target = event.target || event.srcElement;
 			// taisyti tagName
 			var elementInfo = target.previousSibling.tagName +
             " | " + target.tagName + " | " + (target.nextSibling ? target.nextSibling.tagName : "X");
 			
-			that.createOnEnter({ posX: posX, posY: posY, instanceThis: this, instanceThat: that, element: elementInfo});
+			that.createOnEnter({ posX: clickX, posY: clickY, instanceThis: this, instanceThat: that, element: elementInfo});
 		}
 		
 		this.footer = this.$('footer');
