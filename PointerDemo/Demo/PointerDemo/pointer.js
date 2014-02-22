@@ -151,7 +151,7 @@ $(function(){
 	  		var timeNow = d.getTime();
 	  		var dif = timeNow - lastTime;
 	  		if(dif > 500){
-	  			recorderis();
+	  			recorderis(e);
 	  			
 	  			lastTime = timeNow;
 	  			
@@ -159,7 +159,7 @@ $(function(){
 	  		
 		}
 
-		function recorderis(){
+		function recorderis(event){
 
 			var clickX=0, clickY=0;
 			if ((event.clientX || event.clientY) && document.body && document.body.scrollLeft!=null) {
@@ -192,7 +192,7 @@ $(function(){
 		
 
 		document.onclick = function(e){
-				recorderis();
+				recorderis(e);
 				//setTimeout();
 		}
 		
